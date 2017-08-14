@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
-import { inject, observer } from "mobx-react"
+import { inject, observer } from "mobx-react";
+import { Redirect } from 'react-router-dom'
 
 @inject('UserStore')
 @observer
 class Login extends Component {
-
+    state = {
+        redirectToReferrer: false
+    }
   constructor(props){
     super(props);
  }
 
-  componentDidMount(){
-    console.log("componentDidMount")
-  }
 
   loginAction(event){
     event.preventDefault();
     this.props.UserStore.loginUser();
+    this.setState({redirectToReferrer: true})
   }
 
   render() {
-      const { credentials } = this.props.UserStore;
+    const { credentials, fakeAuth } = this.props.UserStore;
+    const { redirectToReferrer } = this.state
+
+    if(redirectToReferrer){
+        return (
+            <Redirect to="/dashboard" />
+        )
+    }
+    
     return (
       <div className="container">
         <div className="row">

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Home.css';
 
-import Login from '../../components/Login';
+//import Login from '../../components/Login';
 
 class Home extends Component {
   render() {

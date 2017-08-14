@@ -3,10 +3,14 @@ import './About.css';
 
 class About extends Component {
   render() {
-    return (
+        return (
       <div className="about">
-        <h2>About Page</h2>
-      </div>
+        <div className="container">
+          <div className="">
+            <h2>About</h2>
+          </div>
+          </div>
+        </div>
     );
   }
 }
