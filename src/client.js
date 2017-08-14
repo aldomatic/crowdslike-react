@@ -3,9 +3,14 @@ import BrowserRouter from 'react-router-dom/BrowserRouter';
 import React from 'react';
 import { render } from 'react-dom';
 
+import { Provider } from 'mobx-react';
+import userStore from "./stores/UserStore";
+
 render(
   <BrowserRouter>
-    <App />
+    <Provider UserStore={userStore}>
+      <App />
+    </Provider>  
   </BrowserRouter>,
   document.getElementById('root')
 );

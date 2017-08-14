@@ -6,6 +6,9 @@ import express from 'express';
 import path from 'path';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 
+import { Provider } from 'mobx-react';
+import userStore from "./stores/UserStore";
+
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
 const server = express();
@@ -16,7 +19,9 @@ server
     const context = {};
     const markup = renderToStaticMarkup(
       <StaticRouter context={context} location={req.url}>
-        <App />
+        <Provider UserStore={userStore}>
+          <App />
+        </Provider>
       </StaticRouter>
     );
 
