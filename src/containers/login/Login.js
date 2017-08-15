@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { inject, observer } from "mobx-react";
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+
+import './Login.css';
 
 @inject('UserStore')
 @observer
@@ -11,8 +13,7 @@ class Login extends Component {
   constructor(props){
     super(props);
  }
-
-
+ 
   loginAction(event){
     event.preventDefault();
     this.props.UserStore.loginUser();
@@ -51,7 +52,7 @@ class Login extends Component {
                             <span className='text-center'><a href="/resetting/request" className="text-sm">Forgot Password?</a></span>
                             <div className="form-group">
                                 <p className="text-center m-t-xs text-sm">Do not have an account?</p>
-                                <a href="/register/" className="btn btn-default btn-block m-t-md">Create an account</a>
+                                <a href="/register" className="btn btn-default btn-block m-t-md register-btn">Create an account</a>
                             </div>
                         </form>
 

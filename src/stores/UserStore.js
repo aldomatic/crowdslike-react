@@ -9,7 +9,15 @@ class UserStore {
     @action loginUser = () =>{
         this.fakeAuth.authenticate(()=> {
             console.log(`Logging in ${this.credentials.email}`);
+            this.credentials.password = "";
         })
+    }
+
+    @action logoutUser = () =>{
+        this.fakeAuth.signout(() => {
+            console.log(`Logging out ${this.credentials.email}`);
+            this.credentials.email = "";
+        });
     }
     
     @observable fakeAuth = {
