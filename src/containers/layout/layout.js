@@ -11,13 +11,7 @@ export default class Layout extends Component {
   constructor(props){
     super(props);
  }
-
-  componentWillMount(){
-    this.props.UserStore.getUsers();
-  }
-
-  static fetchData() {} // will be used for server side rendering
-
+ 
   static propTypes = {
     children: React.PropTypes.object,
   }
