@@ -15,8 +15,8 @@ class UserStore {
         email: '',
         password: ''
     };
-
     @observable validationError = '';
+
     @action loginUser = (callback) =>{
         this.validationError = '';
         if(this.credentials.email !== '' || this.credentials.password !== ''){
@@ -53,6 +53,7 @@ class UserStore {
             }).then((response) =>{
                 if(response && response.data){
                     localStorage.setItem('authToken', response.data.id);
+                    axios.defaults.headers.common['Authorization'] =  localStorage.getItem('authToken');
                     this.authStatus.isAuthenticated = true;
                     cb();
                 }
@@ -65,6 +66,7 @@ class UserStore {
             });
         },
         signout: (cb)=> {
+            axios.defaults.headers.common['Authorization'] = "";
             localStorage.clear('authToken');
             this.authStatus.isAuthenticated = false;
             cb();
