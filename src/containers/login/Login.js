@@ -8,7 +8,8 @@ import './Login.css';
 @observer
 class Login extends Component {
     state = {
-        redirectToReferrer: false
+        redirectToReferrer: false,
+        errorMessage: ''
     }
   constructor(props){
     super(props);
@@ -16,12 +17,14 @@ class Login extends Component {
  
   loginAction(event){
     event.preventDefault();
-    this.props.UserStore.loginUser();
-    this.setState({redirectToReferrer: true})
+    this.props.UserStore.loginUser(() =>{
+        this.setState({redirectToReferrer: true});
+    });
+    
   }
 
   render() {
-    const { credentials, fakeAuth } = this.props.UserStore;
+    const { credentials, fakeAuth, apiAuth, validationError } = this.props.UserStore;
     const { redirectToReferrer } = this.state
 
     if(redirectToReferrer){
@@ -37,7 +40,8 @@ class Login extends Component {
             <div className="col-md-6">
                 <div className="login-box well">
                         <form action="">
-                            <legend>Sign In</legend>
+                            <legend>Welcome</legend>
+                            { validationError ?  <p className="alert alert-danger">{validationError}</p> : '' }
                             <div className="form-group">
                                 <label htmlFor="username-email">E-mail</label>
                                 <input value={credentials.email} onChange={(event) => credentials.email = event.target.value} id="username-email" placeholder="" type="text" className="form-control" />
@@ -50,7 +54,8 @@ class Login extends Component {
                                 <button className="btn btn-default btn-login-submit btn-block m-t-md" onClick={(event)=>this.loginAction(event)}>Login</button>
                             </div>
                             <span className='text-center'><a href="/resetting/request" className="text-sm">Forgot Password?</a></span>
-                            <div className="form-group">
+                            <div className="form-group"><br />
+                            <br />
                                 <p className="text-center m-t-xs text-sm">Do not have an account?</p>
                                 <a href="/register" className="btn btn-default btn-block m-t-md register-btn">Create an account</a>
                             </div>

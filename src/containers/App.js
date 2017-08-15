@@ -17,7 +17,7 @@ import Home from './home/Home';
 import About from './about/About';
 import Dashboard from './dashboard/Dashboard';
 
-//import './App.css';
+import './App.css';
 
 const App = () => (
     <Switch>
