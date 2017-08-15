@@ -10,7 +10,7 @@ class AuthorizedRoute extends Component {
     const { component: Component, pending, logged, UserStore, ...rest } = this.props
     return (
       <Route {...rest} render={props => {
-        return UserStore.fakeAuth.isAuthenticated
+        return UserStore.authStatus.isAuthenticated
           ? <Layout><Component {...props} /></Layout>
           : <Redirect to={{pathname: '/', state: { from: props.location }}}  />
       }} />

@@ -20,7 +20,7 @@ export default class Layout extends Component {
 
   logoutAction(event){
     event.preventDefault();
-    this.props.UserStore.fakeAuth.signout(() =>{
+    this.props.UserStore.apiAuth.signout(() =>{
       console.log(`Logging out.`);
       this.setState({redirectToReferrer: true})
     })

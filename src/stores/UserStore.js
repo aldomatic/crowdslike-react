@@ -18,10 +18,6 @@ class UserStore {
 
     @observable validationError = '';
     @action loginUser = (callback) =>{
-        // this.fakeAuth.authenticate(()=> {
-        //     console.log(`Logging in ${this.credentials.email}`);
-        //     this.credentials.password = '';
-        // });
         this.validationError = '';
         if(this.credentials.email !== '' || this.credentials.password !== ''){
             this.apiAuth.authenticate(()=>{
@@ -33,26 +29,16 @@ class UserStore {
     }
 
     @action logoutUser = () =>{
-        this.fakeAuth.signout(() => {
+        this.apiAuth.signout(() => {
             console.log(`Logging out ${this.credentials.email}`);
             this.credentials.email = '';
         });
     }
-    
-    @observable fakeAuth = {
-        isAuthenticated: false,
-            authenticate(cb) {
-            this.isAuthenticated = true
-            setTimeout(cb, 100) // fake async
-        },
-        signout(cb) {
-            this.isAuthenticated = false
-            setTimeout(cb, 100)
-        }
-    }
 
+    @observable authStatus = {
+        isAuthenticated: false
+    }
     @observable apiAuth = {
-        isAuthenticated: false,
         authenticate: (cb) => {
             axios({
                 method: 'post',
@@ -66,15 +52,23 @@ class UserStore {
                   }
             }).then((response) =>{
                 if(response && response.data){
-                    this.isAuthenticated = true;
+                    localStorage.setItem('authToken', response.data.id);
+                    this.authStatus.isAuthenticated = true;
                     cb();
                 }
             }).catch((error) =>{
-                if(error.response.data.error.name == "ValidationError" || error.response.data.error.code == "LOGIN_FAILED"){
-                    this.validationError = "Please you provided valid login credentials.";
+                if(error){
+                    if(error.response.data.error.name == "ValidationError" || error.response.data.error.code == "LOGIN_FAILED"){
+                        this.validationError = "Please you provided valid login credentials.";
+                    }
                 }
             });
-        }
+        },
+        signout: (cb)=> {
+            localStorage.clear('authToken');
+            this.authStatus.isAuthenticated = false;
+            cb();
+         }
     }
 
 }

@@ -8,8 +8,7 @@ import './Login.css';
 @observer
 class Login extends Component {
     state = {
-        redirectToReferrer: false,
-        errorMessage: ''
+        redirectToReferrer: false
     }
   constructor(props){
     super(props);
@@ -20,11 +19,10 @@ class Login extends Component {
     this.props.UserStore.loginUser(() =>{
         this.setState({redirectToReferrer: true});
     });
-    
   }
 
   render() {
-    const { credentials, fakeAuth, apiAuth, validationError } = this.props.UserStore;
+    const { credentials, apiAuth, validationError } = this.props.UserStore;
     const { redirectToReferrer } = this.state
 
     if(redirectToReferrer){
